@@ -12,9 +12,12 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var slideShowImage: UIImageView!
     
+    @IBOutlet weak var nextImageButton: UIButton!
+    @IBOutlet weak var prevImageButton: UIButton!
+    
     @IBAction func enlargeImage(_ sender: Any) {
         //タッチで拡大画像に遷移
-        performSegue(withIdentifier: "largeImage", sender: nil)
+        performSegue(withIdentifier: "enlarge", sender: nil)
     }
     
     //表示している画像の番号
@@ -27,8 +30,7 @@ class ViewController: UIViewController {
         currentImageNo += 1
         displayImage()
     }
-    
-    
+
     //画像を表示するための関数
     func displayImage() {
         
@@ -79,10 +81,15 @@ class ViewController: UIViewController {
         if self.timer == nil {
             self.timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
             self.slideshowSwitchLabel.setTitle("停止", for: .normal)
+            nextImageButton.isEnabled = false
+            prevImageButton.isEnabled = false
         }
         else {
             self.timer.invalidate() //タイマーを破棄
+            self.timer = nil
             self.slideshowSwitchLabel.setTitle("再生", for: .normal)
+            nextImageButton.isEnabled = true
+            prevImageButton.isEnabled = true
         }
     }
     
@@ -99,6 +106,13 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let secondViewController:SecondViewController = segue.destination as! SecondViewController
+        //segueから遷移先のSecondViewControllerを取得する
+        secondViewController.largeImageNumber = currentImageNo
+        //secondViewControllerで宣言しているinputNameにtextFieldの値を渡す
     }
     
     @IBAction func unwind(_ segue : UIStoryboardSegue){}
