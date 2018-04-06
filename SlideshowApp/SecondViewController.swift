@@ -32,7 +32,6 @@ class SecondViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-        //画像を表示するための関数（ViewController.swiftとまとめられる？）
     }
     
     /*

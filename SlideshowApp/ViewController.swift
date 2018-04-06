@@ -18,6 +18,13 @@ class ViewController: UIViewController {
     @IBAction func enlargeImage(_ sender: Any) {
         //タッチで拡大画像に遷移
         performSegue(withIdentifier: "enlarge", sender: nil)
+        if timer != nil {
+            self.timer.invalidate() //タイマーを破棄
+            self.timer = nil
+            self.slideshowSwitchLabel.setTitle("再生", for: .normal)
+            nextImageButton.isEnabled = true
+            prevImageButton.isEnabled = true
+        }
     }
     
     //表示している画像の番号
